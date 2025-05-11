@@ -1,14 +1,18 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import { CartContext } from "../../context/CartProvider"; // ✅ Import CartContext
+import { useNavigate } from "react-router-dom";
 
 const Rice = () => {
     const [riceItems, setRiceItems] = useState([]);
+    const { addToCart, cartItems } = useContext(CartContext); // ✅ Use CartContext
+    const navigate = useNavigate();
 
     useEffect(() => {
-        fetch("") // ← Replace with your real API
+        fetch("http://localhost:5000/api/rice") // ✅ Use your real API
             .then(res => res.json())
             .then(data => setRiceItems(data))
             .catch(err => console.error("Failed to load rice items:", err));
@@ -26,7 +30,6 @@ const Rice = () => {
                 pagination={{ clickable: true }}
                 className="h-[70vh] w-full"
             >
-                {/* Biryani Slide */}
                 <SwiperSlide>
                     <div
                         className="h-full w-full bg-cover bg-center flex items-center justify-center text-white text-center"
@@ -42,7 +45,6 @@ const Rice = () => {
                     </div>
                 </SwiperSlide>
 
-                {/* Fried Rice Slide */}
                 <SwiperSlide>
                     <div
                         className="h-full w-full bg-cover bg-center flex items-center justify-center text-white text-center"
@@ -58,7 +60,6 @@ const Rice = () => {
                     </div>
                 </SwiperSlide>
 
-                {/* Plain Rice Slide */}
                 <SwiperSlide>
                     <div
                         className="h-full w-full bg-cover bg-center flex items-center justify-center text-white text-center"
@@ -85,7 +86,10 @@ const Rice = () => {
                             <div className="p-4">
                                 <h3 className="text-lg font-semibold">{item.name}</h3>
                                 <p className="text-orange-600 font-bold mt-1">${item.price}</p>
-                                <button className="mt-3 w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-lg transition">
+                                <button
+                                    className="mt-3 w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-lg transition"
+                                    onClick={() => addToCart(item)} // ✅ Add to cart
+                                >
                                     Add to Cart
                                 </button>
                             </div>
@@ -93,6 +97,21 @@ const Rice = () => {
                     ))}
                 </div>
             </div>
+
+            {/* Floating Cart Button */}
+            {cartItems.length > 0 && (
+                <div className="fixed bottom-6 right-6 z-50">
+                    <button
+                        className="relative bg-orange-600 text-white px-5 py-3 rounded-full shadow-lg hover:bg-orange-700"
+                        onClick={() => navigate('/cart')}
+                    >
+                        🛒 Cart
+                        <span className="absolute -top-2 -right-2 bg-white text-orange-600 font-bold rounded-full px-2 text-sm shadow">
+                            {cartItems.length}
+                        </span>
+                    </button>
+                </div>
+            )}
         </div>
     );
 };

@@ -8,7 +8,7 @@ const FastFood = () => {
     const [foods, setFoods] = useState([]);
 
     useEffect(() => {
-        fetch("") // ← Replace with your real API
+        fetch("http://localhost:5000/api/fastfood") 
             .then(res => res.json())
             .then(data => setFoods(data))
             .catch(err => console.error("Failed to load fast food items:", err));

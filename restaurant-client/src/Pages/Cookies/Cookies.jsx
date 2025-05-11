@@ -8,8 +8,7 @@ const Cookies = () => {
     const [cookies, setCookies] = useState([]);
 
     useEffect(() => {
-        // Replace with your actual API endpoint
-        fetch("")
+        fetch("http://localhost:5000/api/cookies") // <-- update to your actual API URL
             .then(res => res.json())
             .then(data => setCookies(data))
             .catch(err => console.error("Failed to load cookies:", err));
@@ -27,13 +26,11 @@ const Cookies = () => {
                 pagination={{ clickable: true }}
                 className="h-[70vh] w-full"
             >
-                {/* Slide 1 */}
                 <SwiperSlide>
                     <div
                         className="h-full w-full bg-cover bg-center flex items-center justify-center text-white text-center"
                         style={{
-                            backgroundImage:
-                                "url(https://images.pexels.com/photos/433120/pexels-photo-433120.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)",
+                            backgroundImage: "url(https://images.pexels.com/photos/433120/pexels-photo-433120.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)",
                         }}
                     >
                         <div className="bg-black bg-opacity-60 p-6 rounded-lg">
@@ -43,13 +40,11 @@ const Cookies = () => {
                     </div>
                 </SwiperSlide>
 
-                {/* Slide 2 */}
                 <SwiperSlide>
                     <div
                         className="h-full w-full bg-cover bg-center flex items-center justify-center text-white text-center"
                         style={{
-                            backgroundImage:
-                                "url(https://images.pexels.com/photos/2377472/pexels-photo-2377472.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)",
+                            backgroundImage: "url(https://images.pexels.com/photos/2377472/pexels-photo-2377472.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)",
                         }}
                     >
                         <div className="bg-black bg-opacity-60 p-6 rounded-lg">
@@ -59,13 +54,11 @@ const Cookies = () => {
                     </div>
                 </SwiperSlide>
 
-                {/* Slide 3 */}
                 <SwiperSlide>
                     <div
                         className="h-full w-full bg-cover bg-center flex items-center justify-center text-white text-center"
                         style={{
-                            backgroundImage:
-                                "url(https://images.pexels.com/photos/3169549/pexels-photo-3169549.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)",
+                            backgroundImage: "url(https://images.pexels.com/photos/3169549/pexels-photo-3169549.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)",
                         }}
                     >
                         <div className="bg-black bg-opacity-60 p-6 rounded-lg">
@@ -81,7 +74,10 @@ const Cookies = () => {
                 <h2 className="text-3xl font-bold text-orange-600 mb-8 text-center">Delicious Cookies Menu</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {cookies.map(cookie => (
-                        <div key={cookie._id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+                        <div
+                            key={cookie._id}
+                            className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300"
+                        >
                             <img src={cookie.image} alt={cookie.name} className="w-full h-40 object-cover" />
                             <div className="p-4">
                                 <h3 className="text-lg font-semibold">{cookie.name}</h3>
