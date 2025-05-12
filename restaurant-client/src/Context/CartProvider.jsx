@@ -9,37 +9,37 @@ const CartProvider = ({ children }) => {
   });
 
   const addToCart = (item) => {
-    const existing = cartItems.find(i => i.id === item.id);
+    const existing = cartItems.find(i => i._id === item._id);
     if (existing) {
       setCartItems(cartItems.map(i =>
-        i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+        i._id === item._id ? { ...i, quantity: i.quantity + 1 } : i
       ));
     } else {
       setCartItems([...cartItems, { ...item, quantity: 1 }]);
     }
   };
 
-  const removeFromCart = (id) => {
-    setCartItems(cartItems.filter(i => i.id !== id));
+  const removeFromCart = (_id) => {
+    setCartItems(cartItems.filter(i => i._id !== _id));
   };
 
-  const increaseQuantity = (id) => {
+  const increaseQuantity = (_id) => {
     setCartItems(cartItems.map(i =>
-      i.id === id ? { ...i, quantity: i.quantity + 1 } : i
+      i._id === _id ? { ...i, quantity: i.quantity + 1 } : i
     ));
   };
 
-  const decreaseQuantity = (id) => {
+  const decreaseQuantity = (_id) => {
     setCartItems(cartItems.map(i => {
-      if (i.id === id) {
+      if (i._id === _id) {
         if (i.quantity > 1) {
           return { ...i, quantity: i.quantity - 1 };
         } else {
-          return null; // Mark for removal
+          return null;
         }
       }
       return i;
-    }).filter(Boolean)); // Remove nulls
+    }).filter(Boolean));
   };
 
   const clearCart = () => setCartItems([]);
